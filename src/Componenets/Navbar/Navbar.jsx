@@ -1,6 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+   const { user, logOut } = useAuth()
+   
+   const handleLogOut = () => {
+      logOut()
+         .then()
+         .catch(error => {
+            console.log(error);
+         })
+   }
    return (
       <div className="flex w-full max-w-7xl mx-auto justify-between">
          <div className="flex text-[#3CAA9F] text-2xl font-bold">
@@ -34,9 +44,23 @@ const Navbar = () => {
                Contact</NavLink>
          </div>
          <div>
-            <NavLink to='/login'>
-               <button className="btn btn-sm capitalize rounded-none bg-transparent border border-[#3CAA9F] text-[#3CAA9F] hover:bg-[#3CAA9F] hover:text-white font-semibold">Login</button>
-            </NavLink>
+
+            {
+               user?.email ? 
+               <div className="dropdown dropdown-end">
+                  <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                     <div className="w-10 rounded-full">
+                        <img src={user.photoURL} />
+                     </div>
+                  </label>
+                  <ul tabIndex={0} className="mt-3 rounded-none z-[1] w-32 border bg-white menu menu-sm dropdown-content">
+                     <li><button className="rounded-sm">{user.displayName}</button></li>
+                     <li><button onClick={handleLogOut} className="rounded-sm">Logout</button></li>
+                  </ul>
+               </div>
+               :
+               <NavLink to='/login'><button className="btn text-lg font-semibold">Login</button></NavLink>
+            }
          </div>
       </div>
    );

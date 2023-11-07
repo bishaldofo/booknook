@@ -1,6 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
+   const { login, googleSign } = useAuth();
+   const navigate = useNavigate();
+   const location = useLocation()
+
+   const handleGoogleSign = () => {
+      googleSign()
+         .then(result => {
+            console.log(result.user)
+            if (result.user) {
+               navigate(location?.state ? location.state : '/')
+            }
+         })
+         .catch(error => {
+            console.log(error)
+         })
+   }
+
+   const handleLogin = event => {
+      event.preventDefault();
+
+      const form = event.target;
+      const email = form.email.value;
+      const password = form.password.value;
+
+      const user = { email, password }
+      console.log(user);
+      login(email, password)
+         .then(result => {
+            console.log(result.user);
+            if (result.user) {
+               navigate(location?.state ? location.state : '/');
+            }
+         })
+         .catch(error => {
+            console.error(error);
+         })
+   }
+
    return (
       <div className="max-w-3xl pt-20 mx-auto flex flex-col justify-center items-center">
          <div className="w-full text-center">
@@ -9,7 +48,7 @@ const Login = () => {
             </Link>
             
             <div className="">
-               <form className="card-body w-full md:w-3/5 mx-auto border-0">
+               <form onSubmit={handleLogin} className="card-body w-full md:w-3/5 mx-auto border-0">
                   <div className="form-control">
                      <label className="label">
                         <span className="label-text">Email Address</span>
@@ -32,7 +71,7 @@ const Login = () => {
                <div>
                   <p className="text-center text-base">or sign in with Google</p>
                   <div className="text-center mt-3">
-                     <button><img className="w-10 border mx-auto" src="https://i.ibb.co/n7GGVwL/google.png" alt="google logo" /></button>
+                     <button onClick={handleGoogleSign}><img className="w-10 border mx-auto" src="https://i.ibb.co/n7GGVwL/google.png" alt="google logo" /></button>
                   </div>
                </div>
 
