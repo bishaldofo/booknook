@@ -109,7 +109,7 @@ const RoomDetails = () => {
 
                               <div className="form-control mt-5">
                                  <label>
-                                    <input type="phone" name="phone" placeholder="Your Phone Number" className="input input-bordered w-full rounded-md" required/>
+                                    <input type="tel" name="phone" placeholder="Your Phone Number" className="input input-bordered w-full rounded-md" required/>
                                  </label>
                               </div>
 

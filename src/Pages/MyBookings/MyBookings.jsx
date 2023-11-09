@@ -5,7 +5,7 @@ import MyBookingsRow from "./MyBookingsRow";
 
 const MyBookings = () => {
    const { user } = useContext(AuthContext);
-   const [bookings, setBookings] = useState([]);
+   const [bookings, setBookings,] = useState([]);
 
    useEffect(() => {
       axios.get(`http://localhost:5000/bookings?email=${user?.email}`)

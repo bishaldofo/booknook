@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MyBookingsRow = ({ booking, handleDelete }) => {
    
@@ -32,7 +32,9 @@ const MyBookingsRow = ({ booking, handleDelete }) => {
          <td>{phone}</td>
          <td>{date}</td>
          <th>
-            <button className="btn btn-ghost btn-xs">details</button>
+            <Link to={`updateDetails/${_id}`}>
+               <button className="btn btn-ghost btn-xs">Edit</button>
+            </Link>
          </th>
       </tr>
    );
