@@ -42,7 +42,7 @@ const RoomDetails = () => {
                   <p className="text-lg"><span className="font-bold text-[#3CAA9F]">Person Capacity:</span> {service.personCapacity}</p>
                   <div className="pt-5">
                      <Link to={`/roomDetails/${service._id}`}>
-                        <button className="bg-[#3CAA9F] py-2 px-4 border border-[#3CAA9F] hover:bg-transparent text-white hover:text-black text-lg rounded-md">Room Details</button>
+                        <button className="bg-[#3CAA9F] py-2 px-4 border border-[#3CAA9F] hover:bg-transparent text-white hover:text-black text-lg rounded-md">Book Now</button>
                      </Link>
                   </div>
                </div>
