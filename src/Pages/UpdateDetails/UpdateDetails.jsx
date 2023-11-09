@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const UpdateDetails = () => {
    const {user} = useContext(AuthContext)
@@ -36,8 +38,8 @@ const UpdateDetails = () => {
       axios.put(`http://localhost:5000/bookings/${_id}`, updateBooking)
       .then(res => {
          console.log(res.data);
-         if (res.data.insertedId) {
-            alert('Room Booked Successfully')
+         if (res.data.matchedCount) {
+            toast.success('Successfully updated!')
             form.reset()
          }
        })

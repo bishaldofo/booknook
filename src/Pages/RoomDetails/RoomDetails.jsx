@@ -1,9 +1,9 @@
-import { Link, useLoaderData } from "react-router-dom";
-import { FaRegCircle } from "react-icons/fa";
+import { useLoaderData } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const RoomDetails = () => {
    const {user} = useContext(AuthContext)
@@ -38,7 +38,7 @@ const RoomDetails = () => {
       .then(res => {
          console.log(res.data);
          if (res.data.insertedId) {
-            alert('Room Booked Successfully')
+            toast.success('Room Booked Successfully!')
             form.reset()
          }
        })
@@ -126,9 +126,7 @@ const RoomDetails = () => {
                               </div>
                                  
                               <div className="pt-5 pb-10">
-                                 {/* <Link to={`/myBookings/${service._id}`}> */}
-                                    <button type="submit" className="bg-[#3CAA9F] w-full py-2 px-4 border border-[#3CAA9F] hover:bg-transparent text-white hover:text-black text-lg rounded-md">Book Now</button>
-                                 {/* </Link> */}
+                                 <button type="submit" className="bg-[#3CAA9F] w-full py-2 px-4 border border-[#3CAA9F] hover:bg-transparent text-white hover:text-black text-lg rounded-md">Book Now</button>
                               </div>
                            </form>
                         </div>
