@@ -4,7 +4,7 @@ const Footer = () => {
          <footer className="footer w-full max-w-7xl m-auto py-10 text-base-content">
             <aside>
                <h2 className="text-[#3CAA9F] text-xl font-bold">BookNook</h2>
-               <p>BookNook<br/>Providing reliable tech since 1992</p>
+               <p>Book Your Sweet Vacation!</p>
             </aside> 
             <nav>
                <header className="footer-title">Services</header> 
