@@ -1,12 +1,52 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import axios from "axios";
 
 const RoomDetails = () => {
+   const {user} = useContext(AuthContext)
 
    const service = useLoaderData()
 
-   const {_id} = service || {}
+   const { _id, roomImages, pricePerNight, category, reviews, description, petsAllowed, childrenAndExtraBeds, extraServices, available, roomSize, numBeds, personCapacity } = service || {}
+   
+   const handleMyBookings = event => {
+      event.preventDefault();
+
+      const form = event.target;
+      const name = form.name.value;
+      const email = form.email.value;
+      const phone = form.phone.value;
+      const address = form.address.value;
+      const date = form.date.value;
+      const booking = {
+         name,
+         email,
+         phone,
+         address,
+         date,
+         roomImages,
+         category,
+         pricePerNight
+      }
+
+      console.log(booking)
+
+      axios.post('http://localhost:5000/bookings', booking)
+      .then(res => {
+         console.log(res.data);
+         if (res.data.insertedId) {
+            alert('Room Booked Successfully')
+            form.reset()
+         }
+       })
+       .catch(error => {
+         console.error("Error making the booking:", error);
+       });
+
+   }
    return (
       <>
          <Helmet>
@@ -24,26 +64,26 @@ const RoomDetails = () => {
                </div>
             </div>
             <div className="max-w-screen-xl m-auto pt-10 pb-10">
-               <div className="grid grid-cols-12 gap-6">
+               <div className="grid grid-cols-12 gap-10">
                   <div className="col-span-1 md:col-span-8">
                      <div>
-                        <img className="h-[60vh] w-full object-cover" src={service.roomImages} alt="" />
+                        <img className="h-[60vh] w-full object-cover" src={roomImages} alt="" />
                      </div>
                      <div className="space-y-3 mt-10">
                         <div className="flex items-end">
-                           <p className="text-base mr-5"><span className="text-[#3CAA9F] text-xl font-semibold">${service.pricePerNight}</span> / Per Night</p>
-                           <p><span className="text-xl font-semibold text-[#3CAA9F]">Reviews:</span> 5/{service.reviews}</p>
+                           <p className="text-base mr-5"><span className="text-[#3CAA9F] text-xl font-semibold">${pricePerNight}</span> / Per Night</p>
+                           <p><span className="text-xl font-semibold text-[#3CAA9F]">Reviews:</span> 5/{reviews}</p>
                         </div>
-                        <h1 className="text-5xl font-bold text-[#3CAA9F]">{service.category}</h1>
-                        <p className="text-base mt-5">{service.description}</p>
-                        <p><span className="font-bold text-[#3CAA9F]">Pets:</span> {service.petsAllowed}</p>
-                        <p><span className="font-bold text-[#3CAA9F]">Children And Extra Beds:</span> {service.childrenAndExtraBeds}</p>
-                        <p><span className="font-bold text-[#3CAA9F]">Extra Services:</span> {service.extraServices}</p>
+                        <h1 className="text-5xl font-bold text-[#3CAA9F]">{category}</h1>
+                        <p className="text-base mt-5">{description}</p>
+                        <p><span className="font-bold text-[#3CAA9F]">Pets:</span> {petsAllowed}</p>
+                        <p><span className="font-bold text-[#3CAA9F]">Children And Extra Beds:</span> {childrenAndExtraBeds}</p>
+                        <p><span className="font-bold text-[#3CAA9F]">Extra Services:</span> {extraServices}</p>
                         <div className="flex justify-between mt-5">
-                           <p><span className="font-bold text-[#3CAA9F]">Available:</span> {service.available}</p>
-                           <p><span className="font-bold text-[#3CAA9F]">Room Size:</span> {service.roomSize}</p>
-                           <p><span className="font-bold text-[#3CAA9F]">Number of Beds:</span> {service.numBeds}</p>
-                           <p className="text-lg"><span className="font-bold text-[#3CAA9F]">Person Capacity:</span> {service.personCapacity}</p>
+                           <p><span className="font-bold text-[#3CAA9F]">Available:</span> {available}</p>
+                           <p><span className="font-bold text-[#3CAA9F]">Room Size:</span> {roomSize}</p>
+                           <p><span className="font-bold text-[#3CAA9F]">Number of Beds:</span> {numBeds}</p>
+                           <p className="text-lg"><span className="font-bold text-[#3CAA9F]">Person Capacity:</span> {personCapacity}</p>
                         </div>
                         
                      </div>
@@ -54,22 +94,28 @@ const RoomDetails = () => {
                            <h2 className="text-white text-2xl font-bold text-center">Book Your Room</h2>
                         </div>
                         <div className="px-5 pt-10">
-                           <form>
+                           <form onSubmit={handleMyBookings}>
                               <div className="form-control">
                                  <label>
-                                    <input type="text" name="name" placeholder="Your Full Name" className="input input-bordered w-full rounded-md" />
+                                    <input type="text" name="name" readOnly defaultValue={user?.displayName} placeholder="Your Full Name" className="input input-bordered w-full rounded-md" />
                                  </label>
                               </div>
                                  
                               <div className="form-control mt-5">
                                  <label>
-                                    <input type="email" name="email" placeholder="Your Email Address" className="input input-bordered w-full rounded-md" required/>
+                                    <input type="email" name="email" readOnly defaultValue={user?.email} placeholder="Your Email Address" className="input input-bordered w-full rounded-md" required/>
                                  </label>
                               </div>
 
                               <div className="form-control mt-5">
                                  <label>
                                     <input type="phone" name="phone" placeholder="Your Phone Number" className="input input-bordered w-full rounded-md" required/>
+                                 </label>
+                              </div>
+
+                              <div className="form-control mt-5">
+                                 <label>
+                                    <input type="address" name="address" placeholder="Your Address Here" className="input input-bordered w-full rounded-md" required/>
                                  </label>
                               </div>
                                  
@@ -80,9 +126,9 @@ const RoomDetails = () => {
                               </div>
                                  
                               <div className="pt-5 pb-10">
-                                 <Link to={`/roomDetails/${service._id}`}>
+                                 {/* <Link to={`/myBookings/${service._id}`}> */}
                                     <button type="submit" className="bg-[#3CAA9F] w-full py-2 px-4 border border-[#3CAA9F] hover:bg-transparent text-white hover:text-black text-lg rounded-md">Book Now</button>
-                                 </Link>
+                                 {/* </Link> */}
                               </div>
                            </form>
                         </div>

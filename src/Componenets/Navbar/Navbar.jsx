@@ -36,12 +36,19 @@ const Navbar = () => {
                :
                "btn btn-ghost btn-sm"}>
                Rooms</NavLink>
-            <NavLink to='/myBookings'
+            
+            {
+               user?.email ? 
+               <NavLink to='/myBookings'
                className={({ isActive }) => isActive ?
                "btn hover:bg-[#3CAA9F] bg-[#3CAA9F] border-0 text-white btn-sm"
-               :
-               "btn btn-ghost btn-sm"}>
+               :"btn btn-ghost btn-sm"}>
                My Bookings</NavLink>
+               :
+               ""
+            }
+            
+            
             <NavLink to='/contact'
                className={({ isActive }) => isActive ?
                "btn hover:bg-[#3CAA9F] bg-[#3CAA9F] border-0 text-white btn-sm"

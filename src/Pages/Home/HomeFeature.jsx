@@ -13,6 +13,9 @@ const HomeFeature = () => {
       .then(res => {
          setServices(res.data.slice(0, 6))
       })
+      .catch(error => {
+         console.error("Error:", error);
+       });
    }, [])
 
    return (

@@ -22,7 +22,6 @@ const Rooms = () => {
          <Helmet>
             <title>BookNook - Home</title>
          </Helmet>
-      
       <div>
          <div>
             <div className="hero h-[60vh]" style={{backgroundImage: 'url(https://i.ibb.co/k9hHBtC/banner-room-details.png)'}}>
